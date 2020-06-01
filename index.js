@@ -148,7 +148,7 @@ const options = {
     key: fs.readFileSync('./localhost.key')
   };
   
-  console.log("Application listening to port 8080");
+  console.log("Application listening to port " + port);
   https.createServer(options, app).listen(port);
 
 // Upload a file to storage / cache
