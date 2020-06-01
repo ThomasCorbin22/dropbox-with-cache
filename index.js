@@ -21,8 +21,8 @@ app.use(express.static('public'))
 let cache = {}
 
 // Set up directory
-let uploadDirectory = __dirname + '/app/storage'
-let publicDirectory = __dirname + '/app/public'
+let uploadDirectory = __dirname + '/storage'
+let publicDirectory = __dirname + '/public'
 
 // Promisified write function
 function writeFile(name, body) {
