@@ -16,7 +16,6 @@ const port = 8081
 
 // Serve public folders
 app.use('/app', express.static('public'))
-app.use('/app', express.static('storage'))
 
 // Set up cache variable
 let cache = {}
