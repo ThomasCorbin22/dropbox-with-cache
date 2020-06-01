@@ -78,7 +78,7 @@ function deleteFile(name) {
 }
 
 // Get request for the homepage
-app.get('/', (request, response) => {
+app.get('/app', (request, response) => {
     console.log('Server is here')
     response.sendFile(publicDirectory + '/index.html')
 })
