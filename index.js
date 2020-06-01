@@ -3,6 +3,8 @@ const express = require('express')
 const bodyParser = require('body-parser');
 const fileUpload = require('express-fileupload');
 const fs = require('fs');
+const https = require('https');
+
 const app = express()
 
 // Set up middleware
@@ -141,9 +143,13 @@ app.get('/download/:id', (request, response) => {
 })
 
 // Set up the server
-app.listen(port, () => {
-    console.log(`This application is listening to port: ${port}`)
-})
+const options = {
+    cert: fs.readFileSync('./localhost.crt'),
+    key: fs.readFileSync('./localhost.key')
+  };
+  
+  console.log("Application listening to port 8080");
+  https.createServer(options, app).listen(port);
 
 // Upload a file to storage / cache
 function uploadFile(file, response) {
