@@ -14,8 +14,8 @@ app.use(fileUpload())
 // Store the port into a variable
 const port = 8081
 
-// Link my two folders
-app.use('/static', express.static('public'))
+// Serve public folders
+app.use('/app', express.static('public'))
 
 // Set up cache variable
 let cache = {}
