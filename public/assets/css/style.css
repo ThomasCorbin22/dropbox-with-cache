@@ -1,0 +1,77 @@
+body{
+    overflow: hidden;
+    margin: 0;
+    padding: 0;
+}
+
+a {
+    text-decoration: none ;
+}
+
+a:hover {
+   color:rgba(255,0,0,1);
+   text-decoration:none;
+   cursor:pointer;
+}
+
+.close:hover {
+    color:rgba(255,0,0,1);
+}
+
+.off-white-color{
+    color: rgba(240,240,240,1);
+}
+
+#myVideo {
+    position: fixed;
+    object-fit: cover;
+    right: 0;
+    bottom: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.container-fluid{
+    height: 100vh
+}
+
+.icons{
+    padding: 20px
+}
+
+.transparent-background{
+    background-color: rgba(0,0,0,0);;
+}
+
+.red-color{
+    color: rgba(255,0,0,1);
+}
+
+.white-rule{
+    border-top: 1px solid rgba(240,240,240,1);
+}
+
+.white-btn{
+    border-color: rgba(240,240,240,1);
+    border-radius: 0
+}
+
+.white-btn:hover{
+    background-color: rgba(150,150,150,1);
+}
+
+.white-btn:focus{
+    outline: none;
+}
+
+#drop_zone {
+    border: 1px solid rgba(240,240,240,1);
+    background-color: rgba(150,150,150,0.5);
+    width:  70vw;
+    height: 70vh;
+    overflow-y: auto;
+}
+
+.grey-background{
+    background-color: rgba(150,150,150,0.5);;
+}

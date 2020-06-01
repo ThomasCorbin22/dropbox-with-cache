@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Velocity</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="stylesheet" href="./assets/css/vendor/reset.css">
+    <link rel="stylesheet" href="./assets/css/vendor/bootstrap.min.css">
+    <link rel="stylesheet" href="./assets/css/style.css">
+
+    <script src="https://kit.fontawesome.com/3414aa6637.js" crossorigin="anonymous"></script>
+</head>
+
+<body>
+    <video autoplay muted loop id="myVideo">
+        <source src="./assets/videos/submerged.mp4" type="video/mp4">
+    </video>
+
+    <div class="container-fluid py-3 off-white-color">
+        <div class="row h-100">
+            <div class="col-10 d-flex align-items-center justify-content-center">
+                <div id='front-page' class="jumbotron transparent-background">
+                    <h1 class="display-3 off-white-color">Get your files with <span class='red-color'>Velocity</span>.
+                    </h1>
+                    <p class="lead">This is a simple dropbox style application. Feel free to store your files here so
+                        you have access to them whenever and wherever you need them.</p>
+                    <hr class="my-4 white-rule">
+                    <p>Click the button below and upload some files.</p>
+                    <p class="lead">
+                        <a id='lets-go' class="white-btn btn btn-outline-primary btn-lg off-white-color" href="#"
+                            role="button">Start Your Cloud</a>
+                    </p>
+                </div>
+
+                <div id='file-upload-zone' class='d-none flex-column'>
+                    <p>Drag one or more files to this Drop Zone ...</p>
+                    <div id="drop_zone" class='p-2' ondrop="dropHandler(event);" ondragover="dragOverHandler(event);">
+                        <!-- Holding space for the stored files -->
+                    </div>
+                    <p class="lead pt-3">
+                        <a id='back' class="white-btn btn btn-outline-primary btn-lg off-white-color" href="#"
+                            role="button">Back To Front Page</a>
+                    </p>
+                </div>
+
+            </div>
+            <div class="col-2 d-flex flex-column justify-content-between align-items-end text-right">
+                <h3 class='red-color'>Velocity<span class='off-white-color'>.</span></h3>
+                <div class='d-flex flex-column align-items-end'>
+                    <span class="icons fa-stack fa-1x">
+                        <i class="fab fa-facebook-f fa-stack-1x"></i>
+                        <i class="far fa-circle fa-stack-2x"></i>
+                    </span>
+                    <span class="icons fa-stack fa-1x">
+                        <i class="fab fa-instagram fa-stack-1x"></i>
+                        <i class="far fa-circle fa-stack-2x"></i>
+                    </span>
+                    <span class="icons fa-stack fa-1x">
+                        <i class="fab fa-twitter fa-stack-1x"></i>
+                        <i class="far fa-circle fa-stack-2x"></i>
+                    </span>
+                    <span class="icons fa-stack fa-1x">
+                        <i class="fab fa-linkedin-in fa-stack-1x"></i>
+                        <i class="far fa-circle fa-stack-2x"></i>
+                    </span>
+                    <span class="icons fa-stack fa-1x">
+                        <i class="fab fa-github fa-stack-1x"></i>
+                        <i class="far fa-circle fa-stack-2x"></i>
+                    </span>
+                </div>
+                <p>Thomas Corbin</p>
+            </div>
+        </div>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"
+        integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
+        integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+        crossorigin="anonymous"></script>
+    <script src="./assets/javascript/main.js"></script>
+</body>
+
+</html>
