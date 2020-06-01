@@ -10,7 +10,7 @@ app.use(bodyParser.urlencoded({ extended: false }))
 app.use(fileUpload())
 
 // Store the port into a variable
-const port = 8080
+const port = 8081
 
 // Link my two folders
 app.use(express.static('public'))
