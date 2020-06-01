@@ -77,13 +77,13 @@ function deleteFile(name) {
 }
 
 // Get request for the homepage
-app.get('/', (request, response) => {
+app.get('/app', (request, response) => {
     console.log('Server is here')
     response.sendFile(publicDirectory + '/index.html')
 })
 
 // Get request for list of files currently in server
-app.get('/directory', (request, response) => {
+app.get('/app/directory', (request, response) => {
     readdir(uploadDirectory)
         .then((body) => {
             response.send(body)
@@ -93,7 +93,7 @@ app.get('/directory', (request, response) => {
 })
 
 // Post request for a file
-app.post('/upload', (request, response) => {
+app.post('/app/upload', (request, response) => {
     if (typeof request.files == 'array') {
         for (let i = 0; i < request.files.length; i++) {
             uploadFile(request.files[i].file, response)
@@ -105,7 +105,7 @@ app.post('/upload', (request, response) => {
 })
 
 // Delete request for a file
-app.delete('/delete', (request, response) => {
+app.delete('/app/delete', (request, response) => {
     console.log(request.body)
     name = request.body.name
 
@@ -122,7 +122,7 @@ app.delete('/delete', (request, response) => {
 })
 
 // Get request for a file
-app.get('/download/:id', (request, response) => {
+app.get('/app/download/:id', (request, response) => {
     name = request.params.id
 
     if (cache[name] == null) {
