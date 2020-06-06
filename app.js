@@ -12,10 +12,10 @@ app.use(bodyParser.urlencoded({ extended: false }))
 app.use(fileUpload())
 
 // Store the port into a variable
-const port = 8081
+const port = 8082
 
 // Serve public folders
-app.use('/app', express.static('public'))
+app.use('/app-02', express.static('public'))
 
 // Set up cache variable
 let cache = {}
@@ -77,13 +77,13 @@ function deleteFile(name) {
 }
 
 // Get request for the homepage
-app.get('/app', (request, response) => {
+app.get('/app-02', (request, response) => {
     console.log('Server is here')
     response.sendFile(publicDirectory + '/index.html')
 })
 
 // Get request for list of files currently in server
-app.get('/app/directory', (request, response) => {
+app.get('/app-02/directory', (request, response) => {
     readdir(uploadDirectory)
         .then((body) => {
             response.send(body)
@@ -93,7 +93,7 @@ app.get('/app/directory', (request, response) => {
 })
 
 // Post request for a file
-app.post('/app/upload', (request, response) => {
+app.post('/app-02/upload', (request, response) => {
     if (typeof request.files == 'array') {
         for (let i = 0; i < request.files.length; i++) {
             uploadFile(request.files[i].file, response)
@@ -105,7 +105,7 @@ app.post('/app/upload', (request, response) => {
 })
 
 // Delete request for a file
-app.delete('/app/delete', (request, response) => {
+app.delete('/app-02/delete', (request, response) => {
     console.log(request.body)
     name = request.body.name
 
@@ -122,7 +122,7 @@ app.delete('/app/delete', (request, response) => {
 })
 
 // Get request for a file
-app.get('/app/download/:id', (request, response) => {
+app.get('/app-02/download/:id', (request, response) => {
     name = request.params.id
 
     if (cache[name] == null) {

@@ -8,7 +8,7 @@ $(function () {
         
         // Gets available files from server
         $.ajax({
-            url: '/app/directory',
+            url: '/app-02/directory',
             method: 'get',
             success: function (data) {
                 console.log(data);
@@ -71,7 +71,7 @@ function postRequest(input) {
 
     // Sends an ajax request to post the information to the server
     $.ajax({
-        url: '/app/upload',
+        url: '/app-02/upload',
         method: 'POST',
         data: formData,
         processData: false,  // tell jQuery not to process the data
@@ -101,7 +101,7 @@ function removeButton(name) {
 
     // Calls an ajax request to delete from the server
     $.ajax({
-        url: '/app/delete',
+        url: '/app-02/delete',
         method: 'DELETE',
         data: {'name': name},
         success: function (data) {
