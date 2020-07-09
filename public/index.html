@@ -30,8 +30,15 @@
                     <hr class="my-4 white-rule">
                     <p>Click the button below and upload some files.</p>
                     <p class="lead">
-                        <a id='lets-go' class="white-btn btn btn-outline-primary btn-lg off-white-color" href="#"
+                        <a id='lets-go' style="display:none"
+                            class="white-btn btn btn-outline-primary btn-lg off-white-color" href="#"
                             role="button">Start Your Cloud</a>
+                        <!-- <a id='signup' style="display:none"
+                            class="white-btn btn btn-outline-primary btn-lg off-white-color" href="#">Sign
+                            Up</a> -->
+                        <a id='login' style="display:none"
+                            class="white-btn btn btn-outline-primary btn-lg off-white-color" href="#" role="button">Log
+                            In</a>
                     </p>
                 </div>
 
@@ -75,6 +82,40 @@
             </div>
         </div>
     </div>
+
+    <div id='login-container' style='display:none' class="auth-modal position-fixed align-items-center justify-content-center">
+        <div class="card" style="width: 18rem;">
+            <form id='form-login' action="/app-02/login" method="post" class="card-body d-flex flex-column">
+                <label class='card-text'>Email</label>
+                <input id='email-login' type="text" name="username" />
+
+                <label class='card-text'>Password</label>
+                <input id='password-login'type="password" name="password" />
+                <p href='#' class='card-footer text-muted'></p>
+
+                <input type="submit" value="Log In" class='btn btn-primary my-3'/>
+            </form>
+        </div>
+    </div>
+
+    <div id='signup-container' style='display:none' class="auth-modal position-absolute align-items-center justify-content-center" >
+        <div class="card" style="width: 18rem;">
+            <form id='form-signup' action="/app-02/signup" method="post" class="card-body d-flex flex-column">
+                <label class='card-text'>Email</label>
+                <input id='email-signup' type="text" name="username" />
+
+                <label class='card-text'>Password</label>
+                <input id='password-signup' type="password" name="password" />
+                <p class='card-footer text-muted'>
+                    Passwords must contain at least eight characters, including at least 1 letter and 1 number.
+                </p>
+
+                <input type="submit" value="Sign Up" class='btn btn-primary my-3'/>
+            </form>
+        </div>
+    </div>
+
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.2.1.min.js"
         integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"

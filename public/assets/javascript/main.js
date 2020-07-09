@@ -1,18 +1,64 @@
 $(function () {
+    // Check for login
+    axios({
+        url: '/app-02/login',
+        method: 'get'
+    })
+        .then((res) => {
+            if (res.data === 'Not Logged In') {
+                $('#login').show()
+                $('#signup').show()
+            }
+            else {
+                $('#lets-go').show()
+                $('#login').hide()
+                $('#signup').hide()
+            }
+        })
+        .catch((error) => {
+            console.log(error);
+        })
+
+    // Show signup modal
+    $('#signup').click(e => {
+        e.preventDefault();
+        $('#signup-container').show()
+        $('#signup-container').addClass('d-flex')
+    })
+
+    // Submit signup form
+    $('#form-signup').submit(e => {
+        $('#signup-container').hide()
+        $('#signup-container').removeClass('d-flex')
+    })
+
+    // Show login modal
+    $('#login').click(e => {
+        e.preventDefault();
+        $('#login-container').show()
+        $('#login-container').addClass('d-flex')
+    })
+
+    // Submit login form
+    $('#form-login').submit(e => {
+        $('#login-container').hide()
+        $('#login-container').removeClass('d-flex')
+    })
+
     // Shows the available files
     $('#lets-go').click((event) => {
         event.preventDefault();
         $('#front-page').hide()
         $('#file-upload-zone').removeClass('d-none')
         $('#file-upload-zone').addClass('d-flex')
-        
+
         // Gets available files from server
         $.ajax({
             url: '/app-02/directory',
             method: 'get',
             success: function (data) {
                 console.log(data);
-                for (let i = 0; i < data.length; i++){
+                for (let i = 0; i < data.length; i++) {
                     dropFiles(data[i])
                 }
             }
@@ -41,7 +87,7 @@ function dropHandler(ev) {
                 var file = ev.dataTransfer.items[i].getAsFile();
                 console.log('... file[' + i + '].name = ' + file.name);
                 console.log(file)
-                
+
                 dropFiles(file.name)
                 postRequest(file)
             }
@@ -85,7 +131,7 @@ function postRequest(input) {
 
 function dropFiles(name) {
     // Checks if the input is already in the HTML document, if not it adds the link.
-    if ($(`[id='${name}']`).length === 0){
+    if ($(`[id='${name}']`).length === 0) {
         // Appends link with URL to download the file / delete the file
         // onclick="window.location.href = '/download/${name}';" will add functionality to the button as a whole but overrides the close button
         $('#drop_zone').append(`<div id='${name}' class="white-btn grey-background btn btn-outline-primary btn-lg btn-block text-left off-white-color"><a href='/download/${name}' name='${name}' class='links off-white-color'>${name}</a><button type="button" class="close" onclick="removeButton('${name}')">&times;</button></div>`)
@@ -95,7 +141,7 @@ function dropFiles(name) {
 function removeButton(name) {
     let element = $(`[id='${name}']`)
     // Checks if the element exists and removes it if it does
-    if (element){
+    if (element) {
         element.remove();
     }
 
@@ -103,7 +149,7 @@ function removeButton(name) {
     $.ajax({
         url: '/app-02/delete',
         method: 'DELETE',
-        data: {'name': name},
+        data: { 'name': name },
         success: function (data) {
             console.log(data);
             alert(data);

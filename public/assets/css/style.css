@@ -1,5 +1,5 @@
 body{
-    overflow: hidden;
+    /* overflow: hidden; */
     margin: 0;
     padding: 0;
 }
@@ -74,4 +74,13 @@ a:hover {
 
 .grey-background{
     background-color: rgba(150,150,150,0.5);;
+}
+
+.auth-modal{
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%;
+    background-color: rgba(0,0,0,0.5);
 }

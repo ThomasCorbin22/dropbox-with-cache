@@ -1,5 +1,6 @@
 // Require modules
 const express = require('express')
+const session = require('express-session');
 const bodyParser = require('body-parser');
 const fileUpload = require('express-fileupload');
 const fs = require('fs');
@@ -7,9 +8,20 @@ const https = require('https');
 
 const app = express()
 
+// Require passport initialisation
+const passport = require('passport');
+const initPassport = require('./auth/init-passport');
+
 // Set up middleware
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(fileUpload())
+
+// Set up session
+app.use(session({
+    secret: 'supersecret',
+    resave: false,
+    saveUninitialized: true,
+}));
 
 // Store the port into a variable
 const port = 8082
@@ -56,7 +68,7 @@ function readFile(name) {
 function deleteFile(name) {
     return new Promise((resolve, reject) => {
         fs.stat(uploadDirectory + '/' + name, function (err, stats) {
-            if (err){
+            if (err) {
                 console.log(name + ' is not a file');
                 resolve(name)
             }
@@ -76,6 +88,16 @@ function deleteFile(name) {
     })
 }
 
+// Initialise passport
+initPassport(app);
+
+// Check if user is logged in
+function isLoggedIn(req) {
+    if (req.isAuthenticated()) {
+        return true
+    }
+}
+
 // Get request for the homepage
 app.get('/app-02', (request, response) => {
     console.log('Server is here')
@@ -84,71 +106,127 @@ app.get('/app-02', (request, response) => {
 
 // Get request for list of files currently in server
 app.get('/app-02/directory', (request, response) => {
-    readdir(uploadDirectory)
-        .then((body) => {
-            response.send(body)
-        }).catch((error) => {
-            response.status(500).send(error.message)
-        })
+    if (isLoggedIn(request) === true) {
+        readdir(uploadDirectory)
+            .then((body) => {
+                response.send(body)
+            }).catch((error) => {
+                response.status(500).send(error.message)
+            })
+    }
+    else {
+        console.log('Not logged in')
+        res.send('Not Logged In');
+    }
 })
 
 // Post request for a file
 app.post('/app-02/upload', (request, response) => {
-    if (typeof request.files == 'array') {
-        for (let i = 0; i < request.files.length; i++) {
-            uploadFile(request.files[i].file, response)
+    if (isLoggedIn(request) === true) {
+        if (typeof request.files == 'array') {
+            for (let i = 0; i < request.files.length; i++) {
+                uploadFile(request.files[i].file, response)
+            }
+        }
+        else {
+            uploadFile(request.files.file, response)
         }
     }
     else {
-        uploadFile(request.files.file, response)
+        console.log('Not logged in')
+        res.send('Not Logged In');
     }
 })
 
 // Delete request for a file
 app.delete('/app-02/delete', (request, response) => {
-    console.log(request.body)
-    name = request.body.name
+    if (isLoggedIn(request) === true) {
+        console.log(request.body)
+        name = request.body.name
 
-    if (cache[name]) {
-        delete cache[name]
+        if (cache[name]) {
+            delete cache[name]
+        }
+
+        deleteFile(name)
+            .then((body) => {
+                console.log(body)
+            }).catch((error) => {
+                response.status(500).send(error.message)
+            })
     }
-
-    deleteFile(name)
-        .then((body) => {
-            console.log(body)
-        }).catch((error) => {
-            response.status(500).send(error.message)
-        })
+    else {
+        console.log('Not logged in')
+        res.send('Not Logged In');
+    }
 })
 
 // Get request for a file
 app.get('/app-02/download/:id', (request, response) => {
-    name = request.params.id
+    if (isLoggedIn(request) === true) {
+        name = request.params.id
 
-    if (cache[name] == null) {
-        console.log('File not in cache.')
-        cache[name] = readFile(name)
+        if (cache[name] == null) {
+            console.log('File not in cache.')
+            cache[name] = readFile(name)
+        }
+        else {
+            console.log('File is in cache')
+        }
+
+        cache[name]
+            .then((body) => {
+                response.send(body)
+            }).catch((error) => {
+                response.status(500).send(error.message)
+            })
     }
     else {
-        console.log('File is in cache')
+        console.log('Not logged in')
+        res.send('Not Logged In');
     }
 
-    cache[name]
-        .then((body) => {
-            response.send(body)
-        }).catch((error) => {
-            response.status(500).send(error.message)
-        })
 })
+
+// Post login request
+app.post('/app-02/login', passport.authenticate('local-login', {
+    successRedirect: '/app-02',
+    failureRedirect: '/app-02'
+}))
+
+// Post signup request
+app.post('/app-02/signup', passport.authenticate('local-signup', {
+    successRedirect: '/app-02',
+    failureRedirect: '/app-02'
+}))
+
+// Login route
+app.get('/app-02/login', (req, res) => {
+    if (isLoggedIn(req) === true) {
+        console.log('Logged in')
+        res.send(req.user.email);
+    }
+    else {
+        console.log('Not logged in')
+        res.send('Not Logged In');
+    }
+})
+
+// Logout route
+app.get("/app-02/logout", (req, res) => {
+    req.logout();
+    console.log('Logged out')
+    res.redirect("/app-02");
+});
 
 // Set up the server
 const options = {
     cert: fs.readFileSync('./localhost.crt'),
     key: fs.readFileSync('./localhost.key')
-  };
-  
-  console.log("Application listening to port " + port);
-  https.createServer(options, app).listen(port);
+};
+
+console.log("Application listening to port " + port);
+https.createServer(options, app).listen(port);
 
 // Upload a file to storage / cache
 function uploadFile(file, response) {
@@ -177,7 +255,7 @@ function readdir(path) {
                 reject(err);
             }
             else {
-                for (let i = 0; i < files.length; i++){
+                for (let i = 0; i < files.length; i++) {
                     fileNames.push(files[i])
                 }
                 resolve(fileNames);
