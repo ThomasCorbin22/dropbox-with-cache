@@ -134,7 +134,7 @@ function dropFiles(name) {
     if ($(`[id='${name}']`).length === 0) {
         // Appends link with URL to download the file / delete the file
         // onclick="window.location.href = '/download/${name}';" will add functionality to the button as a whole but overrides the close button
-        $('#drop_zone').append(`<div id='${name}' class="white-btn grey-background btn btn-outline-primary btn-lg btn-block text-left off-white-color"><a href='/download/${name}' name='${name}' class='links off-white-color'>${name}</a><button type="button" class="close" onclick="removeButton('${name}')">&times;</button></div>`)
+        $('#drop_zone').append(`<div id='${name}' class="white-btn grey-background btn btn-outline-primary btn-lg btn-block text-left off-white-color"><a href='/app-02/download/${name}' name='${name}' class='links off-white-color'>${name}</a><button type="button" class="close" onclick="removeButton('${name}')">&times;</button></div>`)
     }
 }
 

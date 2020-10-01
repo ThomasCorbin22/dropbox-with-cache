@@ -1,5 +1,5 @@
 // Update with your config settings.
-require('dotenv').config();
+require('dotenv').config()
 
 exports.seed = function (knex) {
   // Deletes ALL existing entries
@@ -11,8 +11,8 @@ exports.seed = function (knex) {
       // Inserts seed entries
       return knex('users').insert([
         { email: 'thomas@thomas.com', password: process.env.PASSWORD },
-        { email: 'hollie@hollie.com', password: process.env.PASSWORD  },
-        { email: 'ben@ben.com', password: process.env.PASSWORD  }
-      ]);
-    });
-};
+        { email: 'hollie@hollie.com', password: process.env.PASSWORD },
+        { email: 'ben@ben.com', password: process.env.PASSWORD }
+      ])
+    })
+}
